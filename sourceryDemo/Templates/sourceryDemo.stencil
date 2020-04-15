@@ -1,0 +1,13 @@
+{# 列举了所有实现AutoEquatable协议的类 #}
+{% for type in types.implementing.AutoEquatable %}
+extension {{type.name}}: Equatable {
+    static func ==(lhs: {{type.name}}, rhs: {{type.name}}) -> Bool {
+    {# 对于这个类型中存储的每个变量，做一个比较 #}
+    {% for variable in type.storedVariables %}
+        guard lhs.{{variable.name}} == rhs.{{variable.name}} else { return false }
+    {% endfor %}
+        return true
+    }
+}
+{% endfor %}
+    
